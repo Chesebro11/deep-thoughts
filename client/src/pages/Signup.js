@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Auth from '../utils/auth';
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../utils/mutations';
 
@@ -22,15 +23,14 @@ const handleFormSubmit = async event => {
 
   // use try/catch instead of promises to handle errors
   try {
-    // execute addUser mutation and pass in variable data from form
     const { data } = await addUser({
       variables: { ...formState }
     });
-    console.log(data);
+  
+    Auth.login(data.addUser.token);
   } catch (e) {
     console.error(e);
-  }
-};
+  }}
 
   return (
     <main className="flex-row justify-center mb-4">
